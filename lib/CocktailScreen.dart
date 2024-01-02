@@ -104,8 +104,8 @@ class _CocktailScreenState extends State<CocktailScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _buildPercentageContainer(),
-                      _buildPercentageContainer(),
+                      _buildUnitPriceContainer(),
+                      _buildTotalPriceContainer(),
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -176,46 +176,33 @@ class _CocktailScreenState extends State<CocktailScreen> {
     );
   }
 
-Widget _buildPercentageContainer() {
-  double totalPrice = widget.cocktail.price * widget.initialCountOfCocktail;
+Widget _buildUnitPriceContainer() {
+  double unitPrice = widget.cocktail.price;
 
   return InkWell(
-    onTap: () {
-      // Обработка нажатия на контейнер с процентами
-    },
     child: Container(
-      width: 150,
-      height: 60,
+      width: 85,
+      height: 80, // Увеличил высоту контейнера
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         color: const Color.fromARGB(255, 38, 29, 54),
       ),
-      child: Stack(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Positioned.fill(
-            top: 5,
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: Text(
-                '${widget.cocktail.price}', // Отображение цены коктейля
-                style: const TextStyle(
-                  fontSize: 20,
-                  color: Color.fromARGB(197, 207, 207, 207),
-                ),
-              ),
+          Text(
+            'Price',
+            style: const TextStyle(
+              fontSize: 14,
+              color: Color.fromARGB(197, 207, 207, 207),
             ),
           ),
-          Positioned.fill(
-            bottom: 5,
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Text(
-                '${totalPrice}', // Отображение итоговой цены
-                style: const TextStyle(
-                  fontSize: 20,
-                  color: Color.fromARGB(197, 207, 207, 207),
-                ),
-              ),
+          const SizedBox(height: 8),
+          Text(
+            '\$${unitPrice.toStringAsFixed(2)}', // Отображение цены коктейля
+            style: const TextStyle(
+              fontSize: 20,
+              color: Color.fromARGB(197, 207, 207, 207),
             ),
           ),
         ],
@@ -224,6 +211,44 @@ Widget _buildPercentageContainer() {
   );
 }
 
+Widget _buildTotalPriceContainer() {
+  return StatefulBuilder(
+    builder: (BuildContext context, StateSetter setState) {
+      double totalPrice = widget.cocktail.price * countOfCocktail;
+
+      return InkWell(
+        child: Container(
+          width: 85,
+          height: 80,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: const Color.fromARGB(255, 38, 29, 54),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Total Price',
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Color.fromARGB(197, 207, 207, 207),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                '\$${totalPrice.toStringAsFixed(2)}',
+                style: const TextStyle(
+                  fontSize: 20,
+                  color: Color.fromARGB(197, 207, 207, 207),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
 
   Widget _buildTotalOrderColumn() {
     return Column(
@@ -268,40 +293,41 @@ Widget _buildPercentageContainer() {
     );
   }
 
-  Widget _buildOrderButton() {
-    return Column(
-      children: [
-        InkWell(
-          onTap: () {
-            // Handle order button tap
-          },
-          child: Container(
-            width: 85,
-            height: 140,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: Color.fromARGB(255, 62, 55, 73),
-            ),
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Positioned(
-                  top: 12,
-                  child: const Icon(Icons.abc),
-                ),
-                Positioned(
-                  top: 55,
-                  child: const Icon(Icons.abc),
-                ),
-                Positioned(
-                  bottom: 12,
-                  child: const Icon(Icons.abc),
-                ),
-              ],
-            ),
+ Widget _buildOrderButton() {
+  return Column(
+    children: [
+      InkWell(
+        onTap: () {
+          // Обработка нажатия на кнопку заказа
+        },
+        child: Container(
+          width: 85,
+          height: 140,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: Color.fromARGB(255, 62, 55, 73),
+          ),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Positioned(
+                top: 12,
+                child: Image.asset('images/visa.png', width: 24, height: 24, color: Colors.white),
+              ),
+              Positioned(
+                top: 55,
+                child: Image.asset('images/mastercard.png', width: 24, height: 24, color: Colors.white),
+              ),
+              Positioned(
+                bottom: 12,
+                child: Image.asset('images/paypal.png', width: 24, height: 24, color: Colors.white),
+              ),
+            ],
           ),
         ),
-      ],
-    );
-  }
+      ),      
+    ],
+  );
+}
+
 }
