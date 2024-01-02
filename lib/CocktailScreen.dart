@@ -312,15 +312,15 @@ Widget _buildTotalPriceContainer() {
             children: [
               Positioned(
                 top: 12,
-                child: Image.asset('images/visa.png', width: 24, height: 24, color: Colors.white),
+                child: Image.asset('images/visa.png', width: 104, height: 44, fit: BoxFit.contain),
               ),
               Positioned(
                 top: 55,
-                child: Image.asset('images/mastercard.png', width: 24, height: 24, color: Colors.white),
+                child: Image.asset('images/mastercard.png', width: 104, height: 44, fit: BoxFit.contain),
               ),
               Positioned(
                 bottom: 12,
-                child: Image.asset('images/paypal.png', width: 24, height: 24, color: Colors.white),
+                child: Image.asset('images/paypal.png', width: 104, height: 44, fit: BoxFit.contain),
               ),
             ],
           ),
@@ -329,5 +329,7 @@ Widget _buildTotalPriceContainer() {
     ],
   );
 }
+
+
 
 }
